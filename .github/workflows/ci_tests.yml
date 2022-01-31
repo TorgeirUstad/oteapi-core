@@ -3,9 +3,6 @@ name: CI - Tests
 on:
   pull_request:
   push:
-    branches:
-      - 'master'
-      - 'push-action/**'  # Allow pushing to protected branches (using CasperWA/push-protected)
 
 jobs:
 
@@ -104,13 +101,6 @@ jobs:
     - name: Test with pytest
       run: pytest -vvv --cov-report=xml
 
-    - name: Upload coverage to Codecov
-      if: matrix.python-version == 3.9 && github.repository == 'EMMC-ASBL/oteapi-core'
-      uses: codecov/codecov-action@v2
-      with:
-        files: coverage.xml
-        flags: linux
-
   pytest-win:
     runs-on: windows-latest
     # timeout-minutes: 15
@@ -138,13 +128,6 @@ jobs:
 
     - name: Test with pytest
       run: pytest -vvv --cov-report=xml
-
-    - name: Upload coverage to Codecov
-      if: matrix.python-version == 3.9 && github.repository == 'EMMC-ASBL/oteapi-core'
-      uses: codecov/codecov-action@v2
-      with:
-        files: coverage.xml
-        flags: windows
 
   build-package:
     name: Build distribution package
